@@ -65,7 +65,7 @@ const NavBar = () => {
                 edge="end"
                 color="inherit"
                 component="a"
-                href="https://github.com/frekans7"
+                href="https://github.com/frekans7/pomodoro-timer"
               >
                 <GitHub />
               </IconButton>
