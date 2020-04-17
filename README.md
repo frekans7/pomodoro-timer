@@ -24,5 +24,8 @@
 ![Notifications](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/ss-notifications.png)
 
 
+## License
+
+**[MIT](LICENSE)** Licensed
 
 
