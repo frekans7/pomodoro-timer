@@ -19,7 +19,7 @@
 
 ## Preview
 
-![Pomodoro](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/ss-pomodoro.png)
+![Pomodoro](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/ss-pomodoro.gif)
 
 ![Notifications](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/ss-notifications.png)
 
