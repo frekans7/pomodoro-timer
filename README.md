@@ -16,3 +16,13 @@
 -  Color transition
 -  Audio notification
 -  **Light/Dark** theme
+
+## Preview
+
+![Pomodoro](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/pomodoro.gif)
+
+![Notifications](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/ss-notifications.png)
+
+
+
+
