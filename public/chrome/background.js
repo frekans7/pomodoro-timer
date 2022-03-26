@@ -1,8 +1,6 @@
-window.chrome.browserAction.onClicked.addListener(function (tab) {
-  window.chrome.tabs.create(
-    { url: window.chrome.extension.getURL("index.html") },
-    function (tab) {
-      // Tab opened.
-    }
-  );
+/* eslint-disable no-undef */
+chrome.action.onClicked.addListener((tab) => {
+  chrome.tabs.create({
+    url: "index.html",
+  });
 });
