@@ -13,7 +13,7 @@ import { usePersistedContext, usePersistedReducer } from "./usePersist";
 
 // Theme
 import { ThemeProvider } from "@material-ui/core/styles";
-import { createMuiTheme, CssBaseline, Container } from "@material-ui/core";
+import { createTheme, CssBaseline, Container } from "@material-ui/core";
 
 const App = () => {
   const globalStore = usePersistedContext(useContext(Store), "state");
@@ -24,7 +24,7 @@ const App = () => {
   );
 
   // Theme
-  const theme = createMuiTheme({
+  const theme = createTheme({
     palette: {
       primary: {
         main: state.paint, //"#f05b56",

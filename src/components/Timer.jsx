@@ -1,7 +1,10 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect, useContext, useCallback } from "react";
 import { Button, Grid } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import Push from "push.js";
+import * as workerTimers from "worker-timers";
+import { useDocumentTitle } from "@mantine/hooks";
+
 import Store from "../context";
 
 ///// Progress start
@@ -82,106 +85,97 @@ const Timer = () => {
     setIsActive(false);
   };
 
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setTime(time - 1000);
-        if (time === 0) {
-          reset(timeStamp, timeType);
-          // <-------- Automatic Transition (start) ----------->
-          switch (timeType) {
-            case "pomodoro":
-              if (pomodoroCount < 4 && shortBreakCount < 3) {
-                setPomodoroCount(pomodoroCount + 1);
-                dispatch({
-                  type: "TIME",
-                  payload: {
-                    timeType: "shortBreak",
-                    timeStamp: 300000,
-                    paint: "#4da6a9",
-                  },
-                });
-                Push.create("Time to take a Short Break!", {
-                  icon: "pomodoro.png",
-                });
-                let sound = new Audio("break.mp3");
-                sound.play();
-              } else {
-                dispatch({
-                  type: "TIME",
-                  payload: {
-                    timeType: "longBreak",
-                    timeStamp: 900000,
-                    paint: "#498fc1",
-                  },
-                });
-                Push.create("Time to take a Long Break!", {
-                  icon: "pomodoro.png",
-                });
-                let sound = new Audio("break.mp3");
-                sound.play();
-              }
-              break;
-
-            case "shortBreak":
-              if (shortBreakCount < 3) {
-                setShortBreakCount(shortBreakCount + 1);
-                dispatch({
-                  type: "TIME",
-                  payload: {
-                    timeType: "pomodoro",
-                    timeStamp: 1500000,
-                    paint: "#f05b56",
-                  },
-                });
-                Push.create("Time to Work!", {
-                  icon: "pomodoro.png",
-                });
-                let sound = new Audio("bell.mp3");
-                sound.play();
-              }
-              break;
-
-            case "longBreak":
-              dispatch({
-                type: "TIME",
-                payload: {
-                  timeType: "pomodoro",
-                  timeStamp: 1500000,
-                  paint: "#f05b56",
-                },
-              });
-              Push.create("Time to Work!", {
-                icon: "pomodoro.png",
-              });
-              let sound = new Audio("bell.mp3");
-              sound.play();
-              setPomodoroCount(0);
-              setShortBreakCount(0);
-              break;
-            default:
-              return;
+  const startTimer = useCallback(() => {
+    setTime(time - 1000);
+    if (time === 0) {
+      reset(timeStamp, timeType);
+      // <-------- Automatic Transition (start) ----------->
+      switch (timeType) {
+        case "pomodoro":
+          if (pomodoroCount < 4 && shortBreakCount < 3) {
+            setPomodoroCount(pomodoroCount + 1);
+            dispatch({
+              type: "TIME",
+              payload: {
+                timeType: "shortBreak",
+                timeStamp: 300000,
+                paint: "#4da6a9",
+              },
+            });
+            Push.create("Time to take a Short Break!", {
+              icon: "pomodoro.png",
+            });
+            let sound = new Audio("break.mp3");
+            sound.play();
+          } else {
+            dispatch({
+              type: "TIME",
+              payload: {
+                timeType: "longBreak",
+                timeStamp: 900000,
+                paint: "#498fc1",
+              },
+            });
+            Push.create("Time to take a Long Break!", {
+              icon: "pomodoro.png",
+            });
+            let sound = new Audio("break.mp3");
+            sound.play();
           }
-          // <-------- Automatic Transition (finish) ----------->
-        }
-      }, 1000);
-    } else if (!isActive && time !== 0) {
-      clearInterval(interval);
+          break;
+
+        case "shortBreak":
+          if (shortBreakCount < 3) {
+            setShortBreakCount(shortBreakCount + 1);
+            dispatch({
+              type: "TIME",
+              payload: {
+                timeType: "pomodoro",
+                timeStamp: 1500000,
+                paint: "#f05b56",
+              },
+            });
+            Push.create("Time to Work!", {
+              icon: "pomodoro.png",
+            });
+            let sound = new Audio("bell.mp3");
+            sound.play();
+          }
+          break;
+
+        case "longBreak":
+          dispatch({
+            type: "TIME",
+            payload: {
+              timeType: "pomodoro",
+              timeStamp: 1500000,
+              paint: "#f05b56",
+            },
+          });
+          Push.create("Time to Work!", {
+            icon: "pomodoro.png",
+          });
+          let sound = new Audio("bell.mp3");
+          sound.play();
+          setPomodoroCount(0);
+          setShortBreakCount(0);
+          break;
+        default:
+          return;
+      }
+      // <-------- Automatic Transition (finish) ----------->
     }
-    return () => {
-      clearInterval(interval);
-    };
-  }, [
-    dispatch,
-    isActive,
-    pomodoroCount,
-    shortBreakCount,
-    time,
-    timeStamp,
-    timeType,
-    type,
-  ]);
+  }, [dispatch, pomodoroCount, shortBreakCount, time, timeStamp, timeType]);
+
+  useEffect(() => {
+    if (isActive) {
+      const interval = workerTimers.setInterval(() => startTimer(), 1000);
+      return () => workerTimers.clearInterval(interval);
+    }
+  }, [isActive, startTimer]);
+
+  useDocumentTitle(getTime() + "-Pomodoro Timer");
+
   const classes = useStyles();
 
   ///Progres calculation
@@ -198,7 +192,12 @@ const Timer = () => {
         />
       </div>
 
-      <Grid container direction="row" justify="center" alignItems="flex-start">
+      <Grid
+        container
+        direction="row"
+        justifyContent="center"
+        alignItems="flex-start"
+      >
         <div>
           <p style={{ fontSize: "700%" }}>{getTime()}</p>
           <div className={classes.root}>

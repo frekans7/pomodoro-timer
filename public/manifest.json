@@ -3,7 +3,7 @@
   "name": "Pomodoro Timer",
   "author": "@frekans7",
   "description": "Pomodoro Timer App",
-  "version": "1.1",
+  "version": "1.2",
   "icons": {
     "16": "pomodoro.png",
     "48": "pomodoro.png",
