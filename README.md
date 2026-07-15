@@ -1,68 +1,62 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Pomodoro Timer Chrome Extension
+> A modern, drift-free Pomodoro Timer Chrome Extension built with **React, TypeScript, Bun, Vite**, and **Manifest V3**.
 
-## Available Scripts
+## What is a pomodoro?
 
-In the project directory, you can run:
+> The Pomodoro Technique is a time management method developed by Francesco Cirillo in the late 1980s. The technique uses a timer to break down work into intervals, traditionally 25 minutes in length, separated by short breaks. These intervals are named _pomodoros_.
+>
+> &mdash; <cite>
+  <a href="https://en.wikipedia.org/w/index.php?title=Pomodoro_Technique&amp;oldid=774754409" title="Pomodoro Technique. (2017, April 10). In Wikipedia, The Free Encyclopedia. Retrieved 05:41, May 4, 2017">Pomodoro Technique, Wikipedia</a>
+</cite>
 
-### `yarn start`
+>Pomodoro ™ and Pomodoro Technique ® are registered trademarks of Francesco Cirillo. This app is not affiliated with Francesco Cirillo.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Technology Stack
+- **React** & **TypeScript**
+- **Bun** & **Vite** for blazing fast builds
+- **Chrome Extension Manifest V3** (Service Workers for background timing)
+- **Vanilla CSS Custom Properties** (No external UI libraries)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+### Features of the application
+- **Drift-Free Timer:** Powered by `chrome.alarms` in a background service worker to ensure accurate timing even when the tab is inactive.
+- **Settings Panel:** Fully customizable work, short break, and long break durations.
+- **Audio Notifications:** Distinct sound alerts for starting breaks and returning to work.
+- **Responsive Design:** Clean and modern interface that works perfectly as a full browser tab.
+- **Dynamic Color Transitions:** UI accent colors adapt smoothly based on the active timer phase.
+- **Light / Dark Theme:** Persists to your Chrome storage preferences.
 
-### `yarn test`
+## Getting Started
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Installation & Build
 
-### `yarn build`
+1. Clone the repository and install dependencies using [Bun](https://bun.sh/):
+```bash
+bun install
+```
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+2. Build the extension for production:
+```bash
+bun run build
+```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+3. **Load into Chrome:**
+   - Open Chrome and navigate to `chrome://extensions/`.
+   - Enable **Developer mode** in the top right corner.
+   - Click **Load unpacked** and select the `dist/` directory from this project.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Development
 
-### `yarn eject`
+To start the Vite development server with HMR for the extension:
+```bash
+bun run dev
+```
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+## Preview
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+![Pomodoro](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/pomodoro.gif)
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+![Notifications](https://github.com/frekans7/pomodoro-timer/blob/master/screenshot/notifications.png)
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## License
 
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+**[MIT](LICENSE)** Licensed
