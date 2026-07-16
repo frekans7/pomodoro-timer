@@ -30,6 +30,20 @@ export default function App() {
     document.documentElement.style.setProperty('--color-accent', PHASE_COLORS[phase])
   }, [phase])
 
+  // Update document title with remaining time and phase icon
+  useEffect(() => {
+    const totalSeconds = Math.ceil(timeLeftMs / 1000)
+    const m = Math.floor(totalSeconds / 60)
+    const s = totalSeconds % 60
+    const timeString = `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`
+
+    let emoji = '🎯'
+    if (phase === 'shortBreak') emoji = '☕'
+    if (phase === 'longBreak') emoji = '🏖️'
+
+    document.title = `${emoji} ${timeString} — Pomodoro Timer`
+  }, [timeLeftMs, phase])
+
   // Play sounds when service worker signals a phase transition via pendingSound
   useEffect(() => {
     if (!timerState.pendingSound || !settings.soundEnabled) return

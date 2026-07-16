@@ -3,7 +3,7 @@
   "name": "Pomodoro Timer",
   "author": "@frekans7",
   "description": "Pomodoro Timer — Drift-free, always accurate even in background tabs.",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "icons": {
     "16": "pomodoro.png",
     "48": "pomodoro.png",
